@@ -2,8 +2,12 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300 shadow-lg px-6">
       <div className="flex-1">
-        <a className="btn btn-ghost text-2xl font-extrabold tracking-wide">
-          👨‍💻 <span className="text-teal-300">Dev</span><span className="text-rose-400">Tinder</span>
+        <a className="btn btn-ghost tracking-wide text-2xl">
+          👨‍💻
+          <span className="font-extrabold leading-none">
+            <span className="text-teal-300" style={{ fontSize: "22px", top: "-8px" }}>Dev</span>
+            <span className="text-rose-400" style={{ fontSize: "32px" }}>Tinder</span>
+          </span>
         </a>
       </div>
       <div className="flex gap-2 items-center">

@@ -11,3 +11,7 @@ create browserrouter, route , routes
 Create outlet in bodycomponent
 Create footer
 Create Login
+install axios
+Install CORS in backened and add middlware to with configrations: origin credentials
+whenever you are making API call pass withCredential: true if you don't pass it will not send token back
+that token helps you every time you make network request
