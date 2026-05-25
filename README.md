@@ -15,3 +15,11 @@ install axios
 Install CORS in backened and add middlware to with configrations: origin credentials
 whenever you are making API call pass withCredential: true if you don't pass it will not send token back
 that token helps you every time you make network request
+Install ReduxToolkit
+Create configureStore
+Add Provider
+CreateSlice
+Add Reducer to store
+Navbar soon update as soon as loggedIn
+
+
