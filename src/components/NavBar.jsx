@@ -1,4 +1,5 @@
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
+import {Link} from "react-router-dom";
 
 const NavBar = () => {
     const user = useSelector((store) => store.user)
@@ -6,13 +7,13 @@ const NavBar = () => {
   return (
     <div className="navbar bg-base-300 shadow-lg px-6">
       <div className="flex-1">
-        <a className="btn btn-ghost tracking-wide text-2xl">
+        <Link to="/" className="btn btn-ghost tracking-wide text-2xl">
           👨‍💻
           <span className="font-extrabold leading-none">
             <span className="text-teal-300" style={{ fontSize: "22px", top: "-8px" }}>Dev</span>
             <span className="text-rose-400" style={{ fontSize: "32px" }}>Tinder</span>
           </span>
-        </a>
+        </Link>
       </div>
 
       {user && (
@@ -35,9 +36,9 @@ const NavBar = () => {
             </div>
             <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow-lg">
               <li>
-                <a className="justify-between">
+                <Link to="/profile" className="justify-between">
                   Profile <span className="badge bg-teal-300 text-black border-0">New</span>
-                </a>
+                </Link>
               </li>
               <li><a>Settings</a></li>
               <li><a className="text-rose-400">Logout</a></li>
