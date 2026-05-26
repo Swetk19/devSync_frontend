@@ -57,7 +57,7 @@ const NavBar = () => {
                   Profile <span className="badge bg-teal-300 text-black border-0">New</span>
                 </Link>
               </li>
-              <li><a>Settings</a></li>
+              <Link to="/connections">Connections</Link>
               <li><a onClick={handleLogout}className="text-rose-400">Logout</a></li>
             </ul>
           </div>
