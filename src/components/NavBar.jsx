@@ -1,25 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import {removeUser} from "../utils/userSlice";
-
+import { removeUser } from "../utils/userSlice";
 
 const NavBar = () => {
-    const user = useSelector((store) => store.user)
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const user = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleLogout = async() => {
-      try{
-        await axios.post(BASE_URL + "/logout", {}, {withCredentials: true})
-        dispatch(removeUser())
-        return navigate("/login")
-      }
-      catch(error){
-        console.log(error)
-      }
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      return navigate("/login");
+    } catch (error) {
+      console.log(error);
     }
+  };
 
   return (
     <div className="navbar bg-base-300 shadow-lg px-6">
@@ -27,7 +25,7 @@ const NavBar = () => {
         <Link to="/" className="btn btn-ghost tracking-wide text-2xl">
           👨‍💻
           <span className="font-extrabold leading-none">
-            <span className="text-teal-300" style={{ fontSize: "22px", top: "-8px" }}>Dev</span>
+            <span className="text-teal-300" style={{ fontSize: "22px" }}>Dev</span>
             <span className="text-rose-400" style={{ fontSize: "32px" }}>Tinder</span>
           </span>
         </Link>
@@ -38,7 +36,8 @@ const NavBar = () => {
 
           {/* Welcome Message */}
           <span className="text-sm text-base-content/70 hidden sm:block">
-            Welcome, <span className="text-teal-300 font-semibold">{user.firstName}</span> 👋
+            Welcome,{" "}
+            <span className="text-teal-300 font-semibold">{user.firstName}</span> 👋
           </span>
 
           {/* Avatar Dropdown */}
@@ -47,25 +46,41 @@ const NavBar = () => {
               <div className="w-10 rounded-full ring ring-teal-300 ring-offset-base-100 ring-offset-2">
                 <img
                   alt="User Avatar"
-                  src={user.photoUrl || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                  src={
+                    user.photoUrl ||
+                    "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  }
                 />
               </div>
             </div>
-            <ul tabIndex="-1" className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow-lg">
+            <ul
+              tabIndex="-1"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow-lg"
+            >
               <li>
                 <Link to="/profile" className="justify-between">
-                  Profile <span className="badge bg-teal-300 text-black border-0">New</span>
+                  Profile{" "}
+                  <span className="badge bg-teal-300 text-black border-0">New</span>
                 </Link>
               </li>
-              <Link to="/connections">Connections</Link>
-              <li><a onClick={handleLogout}className="text-rose-400">Logout</a></li>
+              <li>
+                <Link to="/connections">Connections</Link>
+              </li>
+              <li>
+                <Link to="/requests">Requests</Link>
+              </li>
+              <li>
+                <a onClick={handleLogout} className="text-rose-400">
+                  Logout
+                </a>
+              </li>
             </ul>
           </div>
 
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

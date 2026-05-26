@@ -3,19 +3,21 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { addUser } from "../utils/userSlice"
-import {BASE_URL} from "../utils/constants"
+import { BASE_URL } from "../utils/constants"
 
 const Login = () => {
+  const [isLogin, setIsLogin] = useState(true)
   const [emailId, setEmailId] = useState("")
   const [password, setPassword] = useState("")
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [error, setError] = useState("")
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-    const navigate = useNavigate()
   const handleLogin = async () => {
-    
     try {
-      setError("");
+      setError("")
       const res = await axios.post(
         BASE_URL + "/login",
         { emailId, password },
@@ -23,6 +25,21 @@ const Login = () => {
       )
       dispatch(addUser(res.data))
       navigate("/")
+    } catch (err) {
+      setError(err?.response?.data || "Something went wrong. Please try again.")
+    }
+  }
+
+  const handleSignup = async () => {
+    try {
+      setError("")
+      const res = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      )
+      dispatch(addUser(res.data.data)) // ✅ fixed
+      navigate("/profile")
     } catch (err) {
       setError(err?.response?.data || "Something went wrong. Please try again.")
     }
@@ -38,9 +55,43 @@ const Login = () => {
             <div className="w-12 h-12 rounded-full bg-teal-500/20 flex items-center justify-center text-2xl mx-auto mb-3">
               👨‍💻
             </div>
-            <h1 className="text-xl font-bold text-base-content">Welcome back</h1>
-            <p className="text-base-content/40 text-xs mt-1">Sign in to continue to DevTinder</p>
+            <h1 className="text-xl font-bold text-base-content">
+              {isLogin ? "Welcome back" : "Create account"}
+            </h1>
+            <p className="text-base-content/40 text-xs mt-1">
+              {isLogin ? "Sign in to continue to DevTinder" : "Join DevTinder today"}
+            </p>
           </div>
+
+          {/* First Name + Last Name (Signup only) */}
+          {!isLogin && (
+            <div className="flex gap-2 mb-3">
+              <div className="flex-1">
+                <label className="text-[11px] uppercase tracking-wide text-base-content/50 mb-1.5 block">
+                  First Name
+                </label>
+                <input
+                  type="text"
+                  value={firstName}
+                  autoComplete="off"
+                  className="input input-bordered input-sm w-full bg-base-200/50 focus:border-teal-400 focus:outline-none"
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-[11px] uppercase tracking-wide text-base-content/50 mb-1.5 block">
+                  Last Name
+                </label>
+                <input
+                  type="text"
+                  value={lastName}
+                  autoComplete="off"
+                  className="input input-bordered input-sm w-full bg-base-200/50 focus:border-teal-400 focus:outline-none"
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Email */}
           <div className="mb-3">
@@ -50,7 +101,7 @@ const Login = () => {
             <input
               type="email"
               value={emailId}
-              placeholder="you@example.com"
+              autoComplete="off"
               className="input input-bordered input-sm w-full bg-base-200/50 focus:border-teal-400 focus:outline-none"
               onChange={(e) => setEmailId(e.target.value)}
             />
@@ -64,15 +115,17 @@ const Login = () => {
             <input
               type="password"
               value={password}
-              placeholder="••••••••"
+              autoComplete="new-password"
               className="input input-bordered input-sm w-full bg-base-200/50 focus:border-teal-400 focus:outline-none"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <div className="text-right mt-1">
-              <a href="#" className="text-[11px] text-teal-400 hover:underline">
-                Forgot password?
-              </a>
-            </div>
+            {isLogin && (
+              <div className="text-right mt-1">
+                <a href="#" className="text-[11px] text-teal-400 hover:underline">
+                  Forgot password?
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Error Message */}
@@ -80,20 +133,23 @@ const Login = () => {
             <p className="text-rose-400 text-xs text-center mt-3">{error}</p>
           )}
 
-          {/* Login Button */}
+          {/* Submit Button */}
           <button
             className="btn btn-sm w-full mt-4 bg-teal-500 hover:bg-teal-400 border-none text-white font-semibold tracking-wide"
-            onClick={handleLogin}
+            onClick={isLogin ? handleLogin : handleSignup}
           >
-            Login
+            {isLogin ? "Login" : "Sign Up"}
           </button>
 
-          {/* Signup Link */}
+          {/* Toggle Login/Signup */}
           <p className="text-center text-xs text-base-content/40 mt-4">
-            No account?{" "}
-            <a href="/signup" className="text-teal-400 hover:underline font-medium">
-              Sign up
-            </a>
+            {isLogin ? "No account?" : "Already have an account?"}{" "}
+            <button
+              className="text-teal-400 hover:underline font-medium bg-transparent border-none cursor-pointer p-0"
+              onClick={() => { setIsLogin(!isLogin); setError("") }}
+            >
+              {isLogin ? "Sign up" : "Login"}
+            </button>
           </p>
 
         </div>
@@ -102,4 +158,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

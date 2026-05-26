@@ -4,29 +4,34 @@ import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const EditProfile = ({ user }) => {
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
-  const [age, setAge] = useState(Number(user.age));
-  const [gender, setGender] = useState(user.gender);
-  const [about, setAbout] = useState(user.about);
+  const [firstName, setFirstName] = useState(user.firstName || "");
+  const [lastName, setLastName] = useState(user.lastName || "");
+  const [photoUrl, setPhotoUrl] = useState(user.photoUrl || "");
+  const [age, setAge] = useState(user.age || "");
+  const [gender, setGender] = useState(user.gender || "");
+  const [about, setAbout] = useState(user.about || "");
   const [error, setError] = useState("");
   const [toast, setToast] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const saveProfile = async () => {
     setError("");
     try {
       const res = await axios.patch(
         BASE_URL + "/profile/edit",
-        { firstName, lastName, photoUrl, age, gender, about },
+        { firstName, lastName, photoUrl, age: Number(age), gender, about },
         { withCredentials: true }
       );
       dispatch(addUser(res?.data?.data));
       setToast(true);
-      setTimeout(() => setToast(false), 3000);
+      setTimeout(() => {
+        setToast(false);
+        navigate("/");   // ✅ redirect to feed after toast
+      }, 3000);
     } catch (err) {
       console.log(err?.response?.data);
       setError(err?.response?.data?.message || err?.response?.data || err.message);
@@ -36,14 +41,12 @@ const EditProfile = ({ user }) => {
   return (
     <div style={styles.wrapper}>
 
-      {/* Toast */}
       {toast && (
         <div style={styles.toast}>
-          ✅ Profile saved successfully!
+          ✅ Profile saved! Redirecting to feed...
         </div>
       )}
 
-      {/* Edit Form Card */}
       <div style={styles.card}>
         <h2 style={styles.title}>Edit Profile</h2>
 
@@ -85,7 +88,7 @@ const EditProfile = ({ user }) => {
               style={styles.input}
               type="number"
               value={age}
-              onChange={(e) => setAge(Number(e.target.value))}
+              onChange={(e) => setAge(e.target.value)}
               placeholder="25"
             />
           </div>
@@ -117,7 +120,6 @@ const EditProfile = ({ user }) => {
         </button>
       </div>
 
-      {/* Live Preview */}
       <div style={styles.previewWrapper}>
         <p style={styles.previewLabel}>Live Preview</p>
         <UserCard user={{ firstName, lastName, photoUrl, age, gender, about }} />
