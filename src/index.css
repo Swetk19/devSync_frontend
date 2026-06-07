@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* ── DaisyUI v4 dark theme overrides ── */
+[data-theme="dark"] {
+  /* Page backgrounds */
+  --color-base-100: oklch(14% 0.02 265);   /* #0f1117 equivalent */
+  --color-base-200: oklch(17% 0.02 265);   /* #151821 equivalent */
+  --color-base-300: oklch(20% 0.02 265);   /* #1a1f2e equivalent */
+  --color-base-content: oklch(90% 0.01 265); /* #e2e8f0 equivalent */
+
+  /* Primary purple */
+  --color-primary: oklch(60% 0.22 295);
+  --color-primary-content: oklch(100% 0 0);
+
+  /* Card-specific custom vars */
+  --card-bg: #1e2130;
+  --card-inner: #252a3d;
+  --card-border: #2e3450;
+
+  /* AICoach text tokens */
+  --dg-ai-text: #e2e8f0;
+  --dg-input-text: #e2e8f0;
+  --dg-muted: #6b7280;
+  --dg-chip-text: #a78bfa;
+}
+
+[data-theme="light"] {
+  --card-bg: #ffffff;
+  --card-inner: #f3f4f6;
+  --card-border: #e5e7eb;
+
+  --dg-ai-text: #2d1d5e;
+  --dg-input-text: #1f1635;
+  --dg-muted: #9ca3af;
+  --dg-chip-text: #534AB7;
+}

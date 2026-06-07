@@ -2,17 +2,25 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const feedSlice = createSlice({
   name: "feed",
-  initialState: null,
+  initialState: {
+    users: null,           // the feed array
+    selectedSkills: [],    // active skill filters
+  },
   reducers: {
     addFeed: (state, action) => {
-      return action.payload;
+      state.users = action.payload;
     },
     removeUserFromFeed: (state, action) => {
-      const newFeed = state.filter((user) => user._id !== action.payload);
-      return newFeed;
+      state.users = state.users.filter((user) => user._id !== action.payload);
+    },
+    setSelectedSkills: (state, action) => {
+      state.selectedSkills = action.payload;
+    },
+    clearSkillFilter: (state) => {
+      state.selectedSkills = [];
     },
   },
 });
 
-export const { addFeed, removeUserFromFeed } = feedSlice.actions;
+export const { addFeed, removeUserFromFeed, setSelectedSkills, clearSkillFilter } = feedSlice.actions;
 export default feedSlice.reducer;

@@ -1,46 +1,50 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom"; // ✅ removed Navigate
 import axios from "axios";
-import {BASE_URL} from "../utils/constants";
+import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import {addUser} from "../utils/userSlice";
-import { useEffect } from "react";
-
+import { addUser } from "../utils/userSlice";
+import { useEffect, useState } from "react";
 
 const Body = () => {
-   
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const userData = useSelector(store => store.user)
+  const [loading, setLoading] = useState(true)
+  const location = useLocation()
 
-  const fetchUser = async() => {
-    if(userData) return;
-    try{
-      const res = await axios.get(BASE_URL + "/profile/view", {
-      withCredentials: true,
-    });
-    dispatch(addUser(res.data))
-    }
-    catch(error){
-      if(error.status === 401){
-        navigate("/login")
-      }
-      console.error(error)
-    }  
-  }
+  const isChatPage = location.pathname.startsWith("/chat")
 
   useEffect(() => {
-    fetchUser() 
-  }, [])
+    const fetchUser = async () => {
+      if (userData) {
+        setLoading(false)
+        return;
+      }
+      try {
+        const res = await axios.get(BASE_URL + "/profile/view", {
+          withCredentials: true,
+        });
+        dispatch(addUser(res.data))
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUser()
+  }, []) // ✅ fetchUser moved inside useEffect, no warning
+
+  if (loading) return null
 
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
-      <div className="flex-1">
+      <div className="flex-1 w-full min-w-0">
         <Outlet />
       </div>
-      <Footer />
+      {!isChatPage && <Footer />}
     </div>
   )
 }

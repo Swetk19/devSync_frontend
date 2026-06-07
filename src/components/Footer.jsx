@@ -1,51 +1,72 @@
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { BsGithub, BsTwitter, BsLinkedin, BsInstagram, BsHeartFill } from 'react-icons/bs'
+
 const Footer = () => {
-  return (
-    <footer className="bg-base-300 border-t border-base-content/10 px-8 py-4">
-      <div className="max-w-5xl mx-auto flex items-center justify-between gap-6">
+    return (
 
-        {/* Left: Brand + tagline */}
-        <div className="flex items-center gap-6">
-          <div className="text-lg font-extrabold shrink-0">
-            <span className="text-teal-400">Dev</span>
-            <span className="text-rose-400">Tinder</span>
-          </div>
+        <footer className="bg-base-300 text-base-content pt-10 pb-6 mt-auto">
+            <div className="max-w-7xl mx-auto px-4">
 
-          <p className="text-base-content/70 text-xs leading-relaxed max-w-xs hidden md:block">
-            Swipe right on your next tech collaboration. Connect with developers
-            who share your stack, your passion, and your ambition.
-          </p>
-        </div>
+                {/* Responsive Grid: 
+                   - Mobile: 1 Column
+                   - Small Tablet (sm): 2 Columns
+                   - Laptop (md): 4 Columns
+                */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-10">
 
-        {/* Right: Icons stacked above copyright */}
-        <div className="flex flex-col items-end gap-2 shrink-0">
-          <div className="flex gap-1">
-            <a href="#" className="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-              </svg>
-            </a>
-            <a href="#" className="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
-              </svg>
-            </a>
-            <a href="#" className="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect x="2" y="9" width="4" height="12"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-          </div>
+                    {/* Brand Section - Spans 2 columns on tablet/desktop, 1 on mobile */}
+                    <aside className="col-span-1 sm:col-span-2">
+                        <Link to="/" className="text-2xl font-black tracking-tight flex items-center gap-2">
+                            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                                Dev Sync
+                            </span>
+                        </Link>
+                        <p className="mt-4 text-gray-500 max-w-xs leading-relaxed">
+                            Match, Chat, and Code. The ultimate platform for developers to connect, collaborate, and build the future together.
+                        </p>
+                    </aside>
 
-          <p className="text-xs text-base-content/70">
-            © 2026 DevTinder. Made with ❤️ for developers.
-          </p>
-        </div>
+                    {/* Links Column 1 */}
+                    <nav className="flex flex-col gap-2">
+                        <h6 className="footer-title opacity-100 text-primary uppercase tracking-wider">Services</h6>
+                        <Link to="/premiumList" className="link link-hover hover:text-primary transition-colors text-sm">Premium Plans</Link>
+                        <Link to="/ai-coach" className="link link-hover hover:text-primary transition-colors text-sm">AI Career Coach</Link>
+                        <Link to="/feed" className="link link-hover hover:text-primary transition-colors text-sm">Find Developers</Link>
+                        <Link to="/connections" className="link link-hover hover:text-primary transition-colors text-sm">Success Stories</Link>
+                    </nav>
 
-      </div>
-    </footer>
-  )
+                    {/* Links Column 2 */}
+                    <nav className="flex flex-col gap-2">
+                        <h6 className="footer-title opacity-100 text-primary uppercase tracking-wider">Company</h6>
+                        <Link to="/#" className="link link-hover hover:text-primary transition-colors text-sm">About us</Link>
+                        <Link to="/#" className="link link-hover hover:text-primary transition-colors text-sm">Contact</Link>
+                        <Link to="/#" className="link link-hover hover:text-primary transition-colors text-sm">Privacy Policy</Link>
+                        <Link to="/#" className="link link-hover hover:text-primary transition-colors text-sm">Terms of Use</Link>
+                    </nav>
+                </div>
+
+                {/* Divider */}
+                <div className="divider my-0"></div>
+
+                {/* Bottom Section - Stack on Mobile, Row on Desktop */}
+                <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4 py-6">
+                    <aside className="text-center md:text-left">
+                        <p className="flex items-center gap-1 text-sm font-medium text-gray-500">
+                            Built with <BsHeartFill className="text-error animate-pulse" /> in India © {new Date().getFullYear()} - DevSync
+                        </p>
+                    </aside>
+
+                    <nav className="flex gap-6">
+                        <a href="#" rel="noreferrer" className="text-2xl text-gray-500 hover:text-black hover:-translate-y-1 transition-all duration-300 cursor-pointer"><BsGithub /></a>
+                        <a href="#" rel="noreferrer" className="text-2xl text-gray-500 hover:text-blue-400 hover:-translate-y-1 transition-all duration-300 cursor-pointer"><BsTwitter /></a>
+                        <a href="#" rel="noreferrer" className="text-2xl text-gray-500 hover:text-blue-600 hover:-translate-y-1 transition-all duration-300 cursor-pointer"><BsLinkedin /></a>
+                        <a href="#" rel="noreferrer" className="text-2xl text-gray-500 hover:text-pink-500 hover:-translate-y-1 transition-all duration-300 cursor-pointer"><BsInstagram /></a>
+                    </nav>
+                </div>
+            </div>
+        </footer>
+    )
 }
 
 export default Footer
